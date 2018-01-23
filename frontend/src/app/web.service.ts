@@ -1,4 +1,4 @@
-import { Http } from '@angular/http'
+import { Http, Headers, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 import { Injectable } from '@angular/core'
 
@@ -6,21 +6,20 @@ import { Injectable } from '@angular/core'
 
 export class WebService{
 	BASE_URL ='http://localhost:63145/api'
-	constructor(private http: Http){}
-	getMessages(){
-		return this.http.get(this.BASE_URL+'/messages').toPromise()
+  messages=[]
+
+	constructor(private http: Http){
+		this.getMessages()
 	}
+
+	async getMessages(){
+		var response = await this.http.get(this.BASE_URL+'/messages').toPromise()
+		this.messages=response.json();
+		console.log(this.messages)
+	}
+	
 	postMessage(message){
-		message=JSON.stringify(message)
-		console.log(message)
+
 		return this.http.post(this.BASE_URL+'/message', message).toPromise()
-	.then(
-				res=>{
-					console.log(res);
-				},
-				err=>{
-					console.log("error occured",err)
-				}
-		)
-	}
+  }
 }

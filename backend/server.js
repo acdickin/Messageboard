@@ -6,11 +6,12 @@ var bodyParser = require('body-parser')
 
 
 var messages =[
-	{'text':'app', 'user':'me'},
-	{'text':'app', 'user':'me'},
-	{'text':'app', 'user':'me'}
+	{ 'user':'me','text':'app'},
+	{ 'user':'Andrew','text':'app'},
+	{ 'user':'me','text':'app'}
 ]
 //middleware
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -30,10 +31,11 @@ api.get('/messages', (req, res)=>{
 })
 api.post('/message', (req, res)=>{
 	console.log(req.body)
-
 	messages.push(req.body)
 	res.sendStatus(200)
 })
+
+
 app.use('/api', api)
 
 app.listen(63145);
