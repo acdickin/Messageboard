@@ -1,10 +1,10 @@
-import { Component, ngOnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {WebService} from "./web.service"
 @Component({
   selector: 'messages',
   template: `
   	<div *ngFor="let msg of msgs">
-  		<mat-card style="margin:8px"	>
+  		<mat-card class="card"	>
   		<mat-card-title> {{msg.user}}</mat-card-title>
   		<mat-card-content> {{msg.text}} </mat-card-content>
   		</mat-card>
