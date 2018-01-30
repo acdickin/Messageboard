@@ -4,7 +4,7 @@ import {WebService} from "./web.service"
   selector: 'new-messages',
   template: `
     <mat-card class="card"  >
-    <mat-card-content> 
+    <mat-card-content>
       <mat-form-field >
         <input [(ngModel)]="message.user" matInput placeholder="Name" >
       </mat-form-field>
@@ -12,7 +12,7 @@ import {WebService} from "./web.service"
       <mat-form-field class="commentbox">
         <textarea matInput  [(ngModel)]="message.text" placeholder="Leave a comment" ></textarea>
       </mat-form-field>
-      <button (click)="post()" color="primary" mat-button> 
+      <button (click)="post()" color="primary" mat-button>
         POST
       </button>
      </mat-card-content>
@@ -22,9 +22,9 @@ import {WebService} from "./web.service"
 })
 export class NewMessagesComponent  {
   constructor(private webService: WebService){}
-    
-  
-  
+
+
+
   message={
     user:"",
     text:""

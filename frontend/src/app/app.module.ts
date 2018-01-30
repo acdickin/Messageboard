@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpModule } from '@angular/http'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 
 
@@ -11,18 +11,29 @@ import { MessagesComponent } from './messages.component';
 import { NewMessagesComponent } from './new-messages.component'
 import { NavComponent } from './nav.component'
 import { HomeComponent } from './home.component'
+import { RegisterComponent } from './register.component'
 
 import { WebService } from './web.service'
 
 
-var routes=[{
-  path:'',
-  component: HomeComponent
-},
-{
-  path:'message',
-  component: MessagesComponent
-},
+var routes=[
+  {
+    path:'',
+    component: HomeComponent
+  },
+  {
+    path:'message/:user',
+    component: MessagesComponent
+  },
+  {
+    path:'message',
+    component: MessagesComponent
+  },
+  {
+    path:'register',
+    component: RegisterComponent
+  },
+
 ]
 
 import {
@@ -35,11 +46,12 @@ import {
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     MessagesComponent,
     NewMessagesComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +63,11 @@ import {
 	  MatToolbarModule,
     HttpModule,
     FormsModule,
-    RouterModule.forRoot(routes) 
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [WebService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 }

@@ -1,33 +1,44 @@
 import { Http, Headers, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/toPromise'
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core'
+import { Subject } from 'rxjs/Rx'
 import { MatSnackBar } from '@angular/material'
 @Injectable()
 
 export class WebService{
 	BASE_URL ='http://localhost:63145/api'
-  messages=[]
+
+	private messageStore=[
+		{user:'andrew',text:'Its working'},
+		{user:'user1',text:'It is working'},
+		{user:'user2',text:'Message3'}
+	]
+	private messageSubject = new Subject();
+
+	messages=this.messageSubject.asObservable();
 
 	constructor(private http: Http, private sb: MatSnackBar ){
-		this.getMessages()
+		this.getMessages(null)
 	}
 
-	async getMessages(){
+	 getMessages(user){
 		try{
-			var response = await this.http.get(this.BASE_URL+'/messages').toPromise()
-			this.messages=response.json()
+			user =(user!=null)? '/'+ user :"";
+			var response = this.http.get(this.BASE_URL+'/messages'+user).subscribe(response=>{
+				this.messages=response.json()
+				this.messageSubject.next(this.messageStore)
+			})
 		}catch(error){
 			this.handleError("Unable to get messages")
 		}
-		
-		console.log(this.messages)
 	}
-	
+
 	async postMessage(message){
 		try{
 			var response= await this.http.post(this.BASE_URL+'/message', message).toPromise()
-		  response=response.json()
-		  this.messages.push(response)
+			this.messageStore.push(response.json())
+			this.messageSubject.next(this.messageStore)
 	  }catch(error){
 	 		this.handleError("Unable to post message")
 	  }
@@ -37,4 +48,3 @@ export class WebService{
 		this.sb.open(error, "close",{duration:5000})
 	}
 }
-

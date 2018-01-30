@@ -6,9 +6,9 @@ var bodyParser = require('body-parser')
 
 
 var messages =[
-	{ 'user':'me','text':'app'},
-	{ 'user':'Andrew','text':'app'},
-	{ 'user':'me','text':'app'}
+	{ 'user':'me','text':'no'},
+	{ 'user':'Andrew','text':'yes'},
+	{ 'user':'me','text':'maybe'}
 ]
 //middleware
 app.use(bodyParser.json());
@@ -29,6 +29,13 @@ api.get('/messages', (req, res)=>{
 		res.json(messages)
 		)
 })
+
+api.get('/messages/:user', (req, res)=>{
+	var user = req.params.user;
+	var	result= messages.filter(message=>message.user==user)
+	res.json(result)
+})
+
 api.post('/message', (req, res)=>{
 	console.log(req.body)
 	messages.push(req.body)
