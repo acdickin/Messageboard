@@ -3,7 +3,7 @@ import express from 'express';
 
 var users =[ {"firstName":"a" , "lastName":"a" , "email":"a", "password":"a", "id":0}];
 
-export const authRoutes=(app)=>{
+ const authRoutes=(app)=>{
 	
 	app.route('/auth/login')
 	.post((req, res)=>{
@@ -27,3 +27,4 @@ export const authRoutes=(app)=>{
 	})
 
 }
+export default authRoutes
