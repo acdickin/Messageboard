@@ -1,5 +1,7 @@
 import {Output, Component} from '@angular/core';
 import {WebService} from "./web.service"
+import { AuthService } from './auth.service'
+
 @Component({
   selector: 'new-messages',
   template: `
@@ -21,16 +23,15 @@ import {WebService} from "./web.service"
   `,
 })
 export class NewMessagesComponent  {
-  constructor(private webService: WebService){}
+  constructor(private webService: WebService, private auth: AuthService){}
 
 
 
   message={
-    user:"",
+    user:this.auth.name,
     text:""
   }
   post(){
     this.webService.postMessage(this.message)
-
   }
 }
