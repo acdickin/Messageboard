@@ -36,15 +36,14 @@ api.get('/messages', (req, res)=>{
 		)
 })
 
-api.get('/messages/user', (req, res)=>{
+api.get('/messages/:user', (req, res)=>{
 	var user = req.params.user;
+	console.log(user)
 	var	result= messages.filter(message=>message.user==user)
-	console.log('results: ', result)
 	res.json(result)
 })
 
 api.post('/message', (req, res)=>{
-	console.log(req.body)
 	messages.push(req.body)
 	res.json(req.body)
 })
