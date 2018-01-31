@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map'
 
 export class WebService{
 	BASE_URL ='http://localhost:63145/api'
-
+	// BASE_URL =
 
 	private messageStore=[
 	]

@@ -1,0 +1,32 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\andrew.dickinson\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js build
+
+PATH: 
+  C:\users\andrew.dickinson\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\users\andrew.dickinson\bin;C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\Program Files\ActivIdentity\ActivClient;C:\Program Files (x86)\ActivIdentity\ActivClient;C:\Program Files (x86)\Common Files\Roxio Shared\DLLShared;C:\Program Files\Git\cmd;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;C:\Program Files\nodejs;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Docker Toolbox;C:\Users\andrew.dickinson\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.4.0
+
+Node version: 
+  8.9.4
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "C:\\users\\andrew.dickinson\\docker\\Messageboard"
+      at new MessageError (C:\Users\andrew.dickinson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at C:\Users\andrew.dickinson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:55394:15
+      at Generator.next (<anonymous>)
+      at step (C:\Users\andrew.dickinson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at C:\Users\andrew.dickinson\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13
+      at <anonymous>

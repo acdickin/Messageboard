@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core'
 import { Http, Headers, RequestOptions } from '@angular/http'
 import { Router } from '@angular/router'
  
+
 @Injectable()
 export class AuthService{
 	BASE_URL ='http://localhost:63145/auth'
+	//BASE_URL=
 	NAME_KEY ='name'
 	TOKEN_KEY ='token'
 
