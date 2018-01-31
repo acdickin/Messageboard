@@ -10,7 +10,7 @@ var messages =[
 
 const apiRoutes=(app)=>{
 
-	app.route('/messages').get((req, res)=>{
+	app.route('/api/messages').get((req, res)=>{
 		res.send(
 			res.json(messages)
 			)
