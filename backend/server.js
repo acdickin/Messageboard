@@ -2,8 +2,8 @@
 import express from 'express';
 var app =express();
 
-import apiRoutes from './routes/apiRoutes';
-import authRoutes from './routes/authRoutes';
+import messageRoutes from './routes/messageRoutes';
+import userRoutes from './routes/userRoutes';
 
 import bodyParser from 'body-parser';
 
@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-apiRoutes(app)
-authRoutes(app)
+messageRoutes(app)
+userRoutes(app)
 
 app.get('/',(req,res)=>{
 	res.send(`node and express server is running on port ${PORT}`)

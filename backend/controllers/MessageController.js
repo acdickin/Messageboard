@@ -1,6 +1,10 @@
 var config = require('../config');
 import jwt  from 'jsonwebtoken'
+import mongoose from 'mongoose'
+import MessageSchema from '../models/MessageSchema'
 
+const User = mongoose.model('user', MessageSchema);
+ 
 
 export const checkAuthenticated = (req,res,next)=>{
 	if(!req.header('authorization')){
