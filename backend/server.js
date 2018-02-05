@@ -12,8 +12,9 @@ import headers from './middleware/header';
 import mongoose from 'mongoose';
 
 
-
-mongoose.connect(config.db);
+var db =config.config.db
+console.log(db)
+mongoose.connect(db);
 mongoose.set('debug', true)
 
 

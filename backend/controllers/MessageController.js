@@ -5,7 +5,7 @@ import {MessageSchema} from '../models/MessageModel'
 
 const Message = mongoose.model('message', MessageSchema);
  
-export const getAllMessages=()=>{
+export const getAllMessages=(req, res)=>{
 	Message.find({}, function (err, user) {
    if(err){
 			res.send(err);
@@ -15,7 +15,7 @@ export const getAllMessages=()=>{
 }
 export const getMessagesByUser=(req, res)=>{
 	var QueryUser = req.params.user;
-	Message.find({user == QueryUser}, function (err, user) {
+	Message.find({user: QueryUser}, function (err, user) {
    if(err){
 			res.json({user:"No Posts from that use Name",text:""});
 		}
@@ -23,24 +23,22 @@ export const getMessagesByUser=(req, res)=>{
 	})		
 }
 
-export const CreateMessage=(req, res)=>{
-	console.log("create user:" ,req.body)
+export const createMessage=(req, res)=>{
+	
+	console.log("create user:",req.body)
+
 	let newMessage= new Message({
 		user: req.body.user,
 		text:req.body.text
 	})
 	newMessage.save(
-		(newMessage,err)=>{
+		(err)=>{
 			if(err){
+				console.log("error occured", err)
 				throw err;
 			}
 			else{
-				delete newMessage[passhash]
-	
-				sendToken(newMessage, res)
-				
-				res.json({
-					NewMessage:newMessage,
+				  res.json({
 					message:'successful'
 				})
 			}

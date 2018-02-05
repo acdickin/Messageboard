@@ -27,30 +27,33 @@ export const LoginUser=(req, res)=>{
 export const CreateUser=(req, res)=>{
 	console.log("create user:" ,req.body)
 	let newUser= new User({
-		username: req.body.username,
-		email: req.body.email,
 		firstname: req.body.firstname,
   	lastname: req.body.lastname,
+		email: req.body.email,
 		passhash:bcrypt.hashSync(req.body.password, 10)
 	})
-	newUser.save(
-		(newUser,err)=>{
-			if(err){
-				throw err;
-			}
-			else{
-				delete newUser[passhash]
-				
-				sendToken(newUser, res)
-				
-				res.json({
-					user:newUser,
-					message:'successful'
-				})
 
-			}
+	User.find({email: req.body.email}, (err, docs)=>{
+		if (docs.length){
+			res.json({message:"user already exists"})
+		}
+		else{
+			newUser.save(
+				(err)=>{
+					if(err){
+						throw err;
+					}
+					else{
+						delete newUser[passhash]
+						sendToken(newUser, res)				
+						res.json({
+							user:newUser,
+							message:'successful'
+						})
+					}
+			})	
+		}
 	})
-
 }
 
 export const AuthUser=(req, res)=>{

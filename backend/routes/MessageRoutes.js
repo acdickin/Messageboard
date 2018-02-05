@@ -1,13 +1,13 @@
-import {getAllMessages, getMessagesByUser} from '../controllers/MessageController' 
+import {getAllMessages, getMessagesByUser, createMessage} from '../controllers/MessageController' 
 import express from 'express';
 
 
 const MessageRoutes=(app)=>{
 
-	app.route('/messages')
+	app.route('/api/messages')
 		.get((req, res)=>{
-			getAllMessages()
-		}
+			getAllMessages(req, res)
+		})
 
 	app.route('/api/messages/:user')
 		.get((req, res)=>{
@@ -16,8 +16,8 @@ const MessageRoutes=(app)=>{
 
 	app.route('/api/message')
 		.post((req, res)=>{
-			messages.push(req.body)
-			res.json(req.body)
+			console.log("I'm gonna try to make a post")
+			createMessage(req, res)
 		})
 	
 }

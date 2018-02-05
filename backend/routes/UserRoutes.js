@@ -17,6 +17,7 @@ import express from 'express';
 
 	app.route('/api/users/me')
 		.get(checkAuthenticated, (req,res)=>{
+			console.log("i got here")
 			AuthUser(req,res);
 		})
 
