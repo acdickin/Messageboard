@@ -1,4 +1,4 @@
-import { LoginUser, CreateUser, AuthUser, UpdateUser, checkAuthenticated } from '../controllers/authController';
+import { LoginUser, CreateUser, AuthUser, UpdateUser, checkAuthenticated } from '../controllers/UserController';
 import express from 'express';
 
 
@@ -26,4 +26,4 @@ import express from 'express';
 		})
 
 }
-export default authRoutes
+export default UserRoutes

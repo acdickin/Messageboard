@@ -1,23 +1,48 @@
 var config = require('../config');
 import jwt  from 'jsonwebtoken'
 import mongoose from 'mongoose'
-import MessageSchema from '../models/MessageSchema'
+import {MessageSchema} from '../models/MessageModel'
 
-const User = mongoose.model('user', MessageSchema);
+const Message = mongoose.model('message', MessageSchema);
  
+export const getAllMessages=()=>{
+	Message.find({}, function (err, user) {
+   if(err){
+			res.send(err);
+		}
+		res.json(user);
+	})		
+}
+export const getMessagesByUser=(req, res)=>{
+	var QueryUser = req.params.user;
+	Message.find({user == QueryUser}, function (err, user) {
+   if(err){
+			res.json({user:"No Posts from that use Name",text:""});
+		}
+		res.json(user);
+	})		
+}
 
-export const checkAuthenticated = (req,res,next)=>{
-	if(!req.header('authorization')){
-			return res.status(401).send({message: 'Unauthorized request. Missing Authentication Header'})
-	}
+export const CreateMessage=(req, res)=>{
+	console.log("create user:" ,req.body)
+	let newMessage= new Message({
+		user: req.body.user,
+		text:req.body.text
+	})
+	newMessage.save(
+		(newMessage,err)=>{
+			if(err){
+				throw err;
+			}
+			else{
+				delete newMessage[passhash]
 	
-	var token= req.header('authorization').split(" ")[1]
-	var payload = jwt.decode(token,config.secret)
-	
-	if(!payload){
-		return res.status(401).send({message: 'Unauthorized request. Authentication Header invalid'})
-	}
-	
-	req.user=payload;
-	next();
+				sendToken(newMessage, res)
+				
+				res.json({
+					NewMessage:newMessage,
+					message:'successful'
+				})
+			}
+	})
 }

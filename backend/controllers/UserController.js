@@ -1,7 +1,7 @@
 var config = require('../config');
 import jwt  from 'jsonwebtoken'
 import mongoose from 'mongoose'
-import UserSchema from '../models/UserSchema'
+import {UserSchema} from '../models/UserModel'
 
 const User = mongoose.model('user', UserSchema);
  
@@ -68,10 +68,10 @@ export const AuthUser=(req, res)=>{
 export const UpdateUser=(req, res)=>{
 	
 	var UserId=req.id;
-	User.updateOne({_id:UserId},
-		$set:{
-				"firstName" : req.body.firstName
-				"lastName" : req.body.lastName
+	User.updateOne(
+		{_id:UserId}
+		,{
+			$set:{"firstName" : req.body.firstName, "lastName" : req.body.lastName}
 		},
 		(err, results)=>{
 			if(err){
@@ -84,22 +84,17 @@ export const UpdateUser=(req, res)=>{
 			}
 		}
 	)
-	
 	res.json(user);
-
 }
 
 
-
-
-
-sendToken(user,res){
+function sendToken(user,res){
 	var token= jwt.sign(user.id, config.secret); 
 	res.json({firstName:user.firstName,token});
 		
 }
 
-sendAuthError(res){
+function sendAuthError(res){
 	return res.json({success:false, message:"email or password incorrect"});
 }
 

@@ -1,28 +1,17 @@
-import { c} from '../controllers/apiController' 
+import {getAllMessages, getMessagesByUser} from '../controllers/MessageController' 
 import express from 'express';
 
-var messages =[
-	{ "user":'Me', "text":'Hey'},
-	{ "user":'Andrew', "text":'What\'s happening'},
-	{ "user":'Me', "text":'Not a whole lot'}
-]
 
-
-const apiRoutes=(app)=>{
+const MessageRoutes=(app)=>{
 
 	app.route('/messages')
 		.get((req, res)=>{
-			res.send(
-				res.json(messages)
-				)
-		})
+			getAllMessages()
+		}
 
 	app.route('/api/messages/:user')
 		.get((req, res)=>{
-			var user = req.params.user;
-			console.log(user)
-			var	result= messages.filter(message=>message.user==user)
-			res.json(result)
+			 getMessagesByUser(req, res)
 		})
 
 	app.route('/api/message')
@@ -34,4 +23,4 @@ const apiRoutes=(app)=>{
 }
 
 
-export default  apiRoutes;
+export default  MessageRoutes;

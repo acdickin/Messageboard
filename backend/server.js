@@ -2,18 +2,21 @@
 import express from 'express';
 var app =express();
 
-import messageRoutes from './routes/messageRoutes';
-import userRoutes from './routes/userRoutes';
+import MessageRoutes from './routes/MessageRoutes';
+import UserRoutes from './routes/UserRoutes';
 
 import bodyParser from 'body-parser';
 
 import config from './config';
 import headers from './middleware/header';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-// mongoose.Promise = global.Promise;
 
-// mongoose.connect(config.db);
+
+mongoose.connect(config.db);
+mongoose.set('debug', true)
+
+
 
 //middleware
 const PORT = 63145;
@@ -25,8 +28,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-messageRoutes(app)
-userRoutes(app)
+MessageRoutes(app)
+UserRoutes(app)
 
 app.get('/',(req,res)=>{
 	res.send(`node and express server is running on port ${PORT}`)
