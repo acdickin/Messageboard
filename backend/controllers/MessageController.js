@@ -1,4 +1,3 @@
-var config = require('../config');
 import jwt  from 'jsonwebtoken'
 import mongoose from 'mongoose'
 import {MessageSchema} from '../models/MessageModel'

@@ -1,4 +1,4 @@
-import { LoginUser, CreateUser, AuthUser, UpdateUser, checkAuthenticated } from '../controllers/UserController';
+import { loginUser, createUser, authUser, updateUser, checkAuthenticated } from '../controllers/UserController';
 import express from 'express';
 
 
@@ -6,24 +6,24 @@ import express from 'express';
 	
 	app.route('/auth/login')
 		.post((req, res)=>{
-				LoginUser(res,req);
+			console.log(req.body)
+			loginUser(req,res);
 		})
 
 	
 	app.route('/auth/register')
 		.post((req, res)=>{
-			CreateUser(req, res);
+			createUser(req, res);
 		})
 
 	app.route('/api/users/me')
 		.get(checkAuthenticated, (req,res)=>{
-			console.log("i got here")
-			AuthUser(req,res);
+			authUser(req,res);
 		})
 
 	app.route('/api/users/me')
 		.post(checkAuthenticated, (req,res)=>{
-			UpdateUser(req, res);
+			updateUser(req, res);
 		})
 
 }

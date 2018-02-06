@@ -16,7 +16,6 @@ const MessageRoutes=(app)=>{
 
 	app.route('/api/message')
 		.post((req, res)=>{
-			console.log("I'm gonna try to make a post")
 			createMessage(req, res)
 		})
 	
