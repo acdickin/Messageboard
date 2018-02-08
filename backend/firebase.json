@@ -1,13 +1,14 @@
 {
   "hosting": {
-    "public": "./build",
+    "public": "./",
     "ignore": [
       "firebase.json",
-      "**/.*",
+      ".gitignore",
+      ".firebaserc",
       "**/node_modules/**"
     ]
   },
   "functions": {
-    "source": "functions"
+    "source": ""
   }
 }
