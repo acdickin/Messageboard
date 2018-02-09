@@ -173,7 +173,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["d" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["i" /* ReactiveFormsModule */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* RouterModule */].forRoot(routes),
+            __WEBPACK_IMPORTED_MODULE_5__angular_router__["c" /* RouterModule */].forRoot(routes, { useHash: true }),
             __WEBPACK_IMPORTED_MODULE_14_angularfire2__["a" /* AngularFireModule */].initializeApp(firebaseConfig)
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_15__web_service__["a" /* WebService */], __WEBPACK_IMPORTED_MODULE_16__auth_service__["a" /* AuthService */]],
@@ -193,6 +193,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/esm2015/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/esm2015/router.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/esm2015/material.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -205,11 +206,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 let AuthService = class AuthService {
-    constructor(http, router) {
+    constructor(http, router, sb) {
         this.http = http;
         this.router = router;
+        this.sb = sb;
         this.BASE_URL = 'http://localhost:63145/auth';
+        //BASE_URL=
         this.NAME_KEY = 'name';
         this.TOKEN_KEY = 'token';
     }
@@ -225,16 +229,25 @@ let AuthService = class AuthService {
         return new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
     }
     login(loginData) {
-        this.http.post(this.BASE_URL + '/login', loginData).subscribe(res => {
-            console.log(res);
-            this.authenticate(res);
-        });
+        try {
+            this.http.post(this.BASE_URL + '/login', loginData).subscribe(res => {
+                this.authenticate(res);
+            });
+        }
+        catch (_a) {
+            this.handleError("User and Password do not match");
+        }
     }
     register(user) {
-        delete user.comfirmPassword;
-        this.http.post(this.BASE_URL + '/register', user).subscribe(res => {
-            this.authenticate(res);
-        });
+        try {
+            delete user.comfirmPassword;
+            this.http.post(this.BASE_URL + '/register', user).subscribe(res => {
+                this.authenticate(res);
+            });
+        }
+        catch (_a) {
+            this.handleError("This user already exists");
+        }
     }
     logout() {
         localStorage.removeItem(this.TOKEN_KEY);
@@ -249,10 +262,14 @@ let AuthService = class AuthService {
         localStorage.setItem(this.NAME_KEY, res.json().firstName);
         this.router.navigate[('/')];
     }
+    handleError(error) {
+        console.error(error);
+        this.sb.open(error, "close", { duration: 5000 });
+    }
 };
 AuthService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_3__angular_material__["d" /* MatSnackBar */]])
 ], AuthService);
 
 
@@ -381,9 +398,14 @@ MessagesComponent = __decorate([
         selector: 'messages',
         template: `
   	<div *ngFor="let message of webService.messages | async ">
-  		<mat-card class="card">
-  		<mat-card-title [routerLink]="['/messages/', message.user]" style="cursor:pointer"> {{message.user}}</mat-card-title>
-  		<mat-card-content> {{message.text}} </mat-card-content>
+      <mat-card *ngIf="!message" class="card">
+        <mat-card-title >No Messages found for that user</mat-card-title>
+        <mat-card-content> </mat-card-content>
+      </mat-card>
+  		
+      <mat-card class="card">
+  		  <mat-card-title [routerLink]="['/messages/', message.user]" style="cursor:pointer"> {{message.user}} <div class="date">{{message.created | date : "medium" }}</div></mat-card-title>
+  		  <mat-card-content> {{message.text}} </mat-card-content>
   		</mat-card>
   	</div>
   `,
@@ -448,6 +470,7 @@ NavComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm2015/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__web_service__ = __webpack_require__("../../../../../src/app/web.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth_service__ = __webpack_require__("../../../../../src/app/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/esm2015/router.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -460,10 +483,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 let NewMessagesComponent = class NewMessagesComponent {
-    constructor(webService, auth) {
+    constructor(webService, auth, router) {
         this.webService = webService;
         this.auth = auth;
+        this.router = router;
         this.message = {
             user: this.auth.name,
             text: ""
@@ -471,6 +496,9 @@ let NewMessagesComponent = class NewMessagesComponent {
     }
     post() {
         this.webService.postMessage(this.message);
+        setTimeout(function () {
+            this.router.navigate(['']);
+        }, 2000);
     }
 };
 NewMessagesComponent = __decorate([
@@ -494,7 +522,7 @@ NewMessagesComponent = __decorate([
 
   `,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__web_service__["a" /* WebService */], __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__web_service__["a" /* WebService */], __WEBPACK_IMPORTED_MODULE_2__auth_service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]])
 ], NewMessagesComponent);
 
 
@@ -674,6 +702,7 @@ let WebService = class WebService {
         this.sb = sb;
         this.auth = auth;
         this.BASE_URL = 'http://localhost:63145/api';
+        // BASE_URL =
         this.messageStore = [];
         this.messageSubject = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */]([]);
         this.messages = this.messageSubject.asObservable();
@@ -683,8 +712,6 @@ let WebService = class WebService {
         try {
             var response = this.http.get(this.BASE_URL + '/messages').subscribe(response => {
                 this.messageStore = response.json();
-                console.log(this.messageStore);
-                console.log("get all");
                 this.messageSubject.next(this.messageStore);
             });
         }
@@ -697,8 +724,6 @@ let WebService = class WebService {
             var user = '/' + user;
             var response = this.http.get(this.BASE_URL + '/messages' + user).subscribe(response => {
                 this.messageStore = response.json();
-                console.log(this.messageStore);
-                console.log("get all");
                 this.messageSubject.next(this.messageStore);
             });
         }

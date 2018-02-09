@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Http, Headers, RequestOptions } from '@angular/http'
 import { Router } from '@angular/router'
- 
+import { MatSnackBar } from '@angular/material'
 
 @Injectable()
 export class AuthService{
@@ -10,7 +10,7 @@ export class AuthService{
 	NAME_KEY ='name'
 	TOKEN_KEY ='token'
 
-	constructor(private http:Http, private router:Router){	}
+	constructor(private http:Http, private router:Router,  private sb: MatSnackBar,){	}
 
 
 	get name(){
@@ -30,18 +30,26 @@ export class AuthService{
 
 
 	login(loginData){
-		this.http.post(this.BASE_URL +'/login', loginData).subscribe(res =>{
-				console.log(res)
+		try{
+			this.http.post(this.BASE_URL +'/login', loginData).subscribe(res =>{
 				this.authenticate(res)
-		})
+			})
+		}
+		catch{
+			this.handleError("User and Password do not match")
+		}
 	}
 
 	register(user){
-		delete user.comfirmPassword
-		this.http.post(this.BASE_URL +'/register', user).subscribe(res =>{
-			this.authenticate(res)
-	
-		})
+		try{
+			delete user.comfirmPassword
+			this.http.post(this.BASE_URL +'/register', user).subscribe(res =>{
+				this.authenticate(res)
+			})
+		}
+		catch{
+			this.handleError("This user already exists")
+		}
 	}
 
 	logout(){
@@ -59,4 +67,10 @@ export class AuthService{
 		localStorage.setItem(this.NAME_KEY, res.json().firstName)
 		this.router.navigate[('/')]
 	}
+	private handleError(error){
+		console.error(error);
+		this.sb.open(error, "close",{duration:5000})
+	}
+
 }
+

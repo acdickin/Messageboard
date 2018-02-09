@@ -87,7 +87,7 @@ import {
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [WebService, AuthService],
