@@ -14,10 +14,20 @@ import { HomeComponent } from './home.component'
 import { RegisterComponent } from './register.component'
 import { LoginComponent } from './login.component';
 import { UserComponent } from './user.component'
-
+import { AngularFireModule } from 'angularfire2'
 
 import { WebService } from './web.service'
 import { AuthService } from './auth.service'
+
+
+export const firebaseConfig ={ 
+  apiKey: "AIzaSyDsu8AWNy-nnjvRSTwj0Zy-4qD2xrzDlnQ",
+  authDomain: "angularchatapp88.firebaseapp.com",
+  databaseURL: "https://angularchatapp88.firebaseio.com",
+  projectId: "angularchatapp88",
+  storageBucket: "",
+  messagingSenderId: "335624676943"
+}
 
 var routes=[
   {
@@ -77,7 +87,8 @@ import {
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true }),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [WebService, AuthService],
   bootstrap: [AppComponent]

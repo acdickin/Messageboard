@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map'
 
 export class WebService{
 	BASE_URL ='http://localhost:63145/api'
-
+	// BASE_URL =
 
 	private messageStore=[
 	]
@@ -31,8 +31,6 @@ export class WebService{
 		try{
 			var response = this.http.get(this.BASE_URL+'/messages').subscribe(response=>{
 				this.messageStore=response.json()
-				console.log(this.messageStore)
-				console.log("get all")
 				this.messageSubject.next(this.messageStore)
 			})
 		}catch(error){
@@ -45,8 +43,6 @@ export class WebService{
 			var user ='/'+ user ;
 			var response = this.http.get(this.BASE_URL+'/messages'+user).subscribe(response=>{
 				this.messageStore=response.json()
-				console.log(this.messageStore)
-				console.log("get all")
 				this.messageSubject.next(this.messageStore)
 			})
 		}catch(error){

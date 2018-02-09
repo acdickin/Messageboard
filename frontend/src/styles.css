@@ -9,3 +9,7 @@ body{
 .commentbox{
 	width:80%;
 }
+.date{
+	float:right;
+	font-size: 14px;
+}

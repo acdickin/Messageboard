@@ -1,7 +1,7 @@
-import {Output, Component} from '@angular/core';
-import {WebService} from "./web.service"
+import { Output, Component } from '@angular/core';
+import { WebService } from "./web.service"
 import { AuthService } from './auth.service'
-
+import { Router } from "@angular/router"
 @Component({
   selector: 'new-messages',
   template: `
@@ -23,7 +23,7 @@ import { AuthService } from './auth.service'
   `,
 })
 export class NewMessagesComponent  {
-  constructor(private webService: WebService, private auth: AuthService){}
+  constructor(private webService: WebService, private auth: AuthService, private router: Router){}
 
 
 
@@ -33,5 +33,9 @@ export class NewMessagesComponent  {
   }
   post(){
     this.webService.postMessage(this.message)
+    setTimeout(function(){
+       this.router.navigate([''])
+    }, 2000);
+    
   }
 }
