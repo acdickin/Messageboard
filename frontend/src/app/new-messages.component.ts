@@ -32,10 +32,6 @@ export class NewMessagesComponent  {
     text:""
   }
   post(){
-    this.webService.postMessage(this.message)
-    setTimeout(function(){
-       this.router.navigate([''])
-    }, 2000);
-    
+    this.webService.postMessage(this.message)    
   }
 }

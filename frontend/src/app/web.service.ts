@@ -11,16 +11,14 @@ import 'rxjs/add/operator/map'
 @Injectable()
 
 export class WebService{
-	BASE_URL ='http://localhost:63145/api'
-	// BASE_URL =
-
-	private messageStore=[
-	]
+	//BASE_URL ='http://localhost:63145/api'
+	BASE_URL ="https://messageboardapi.herokuapp.com/api"
+	private messageStore=[]
 	
 	private messageSubject:BehaviorSubject<any[]>
 
 
-	messages:Observable<any[]>
+	messages:Observable<any>;
 
 	constructor(private http: Http, private sb: MatSnackBar, private auth : AuthService ){
 		this.messageSubject= <BehaviorSubject<any[]>>new BehaviorSubject([]);

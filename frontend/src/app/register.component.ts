@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from './auth.service'
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'resgister',
   templateUrl:'register.component.html',
@@ -13,7 +13,7 @@ import { AuthService } from './auth.service'
 
 export class RegisterComponent {
   form;
-  constructor(private fb: FormBuilder, private auth: AuthService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router){
     this.form = fb.group({
       firstName:['',Validators.required],
       lastName:['',Validators.required],
@@ -25,9 +25,11 @@ export class RegisterComponent {
 
   onSubmit(){
     this.auth.register(this.form.value)
+    this.router.navigate(['/'])
   }
   isValid(control){
     return this.form.controls[control].invalid && this.form.controls[control].touched
+   
   }
 }
 function matchingFields(field1, field2){

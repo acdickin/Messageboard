@@ -5,8 +5,8 @@ import { MatSnackBar } from '@angular/material'
 
 @Injectable()
 export class AuthService{
-	BASE_URL ='http://localhost:63145/auth'
-	//BASE_URL=
+	//BASE_URL ='http://localhost:63145/auth'
+	BASE_URL="https://messageboardapi.herokuapp.com/auth"
 	NAME_KEY ='name'
 	TOKEN_KEY ='token'
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'messages',
   template: `
-  	<div *ngFor="let message of webService.messages | async ">
+  	<div *ngFor="let message of messages">
       <mat-card *ngIf="!message" class="card">
         <mat-card-title >No Messages found for that user</mat-card-title>
         <mat-card-content> </mat-card-content>
@@ -23,15 +23,14 @@ export class MessagesComponent implements OnInit {
 
   constructor(public webService: WebService, private route: ActivatedRoute){}
 
-
+  messages:Observable<any>
 
   ngOnInit(){
     var name =this.route.snapshot.params.user;
   
     (name)? this.webService.getMessages(name) : this.webService.getAllMessages();
-    this.webService.getUser().subscribe();
-  
-    
-
+    this.webService.messages.subscribe(messages=>{
+      this.messages = messages
+    })
   }
 }
