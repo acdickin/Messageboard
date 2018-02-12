@@ -21,15 +21,17 @@ export class WebService{
 	messages:Observable<any>;
 
 	constructor(private http: Http, private sb: MatSnackBar, private auth : AuthService ){
+		this.getAllMessages()
 		this.messageSubject= <BehaviorSubject<any[]>>new BehaviorSubject([]);
 		this.messages = this.messageSubject.asObservable();
-		this.getAllMessages()
 	}
+
 	getAllMessages(){
 		try{
 			var response = this.http.get(this.BASE_URL+'/messages').subscribe(response=>{
 				this.messageStore=response.json()
 				this.messageSubject.next(this.messageStore)
+				console.log(this.messageStore)
 			})
 		}catch(error){
 			this.handleError("Unable to get messages")
@@ -53,6 +55,7 @@ export class WebService{
 			var response= this.http.post(this.BASE_URL+'/message',message).subscribe(response=>{
 				this.messageStore.push(response.json())
 				this.messageSubject.next(this.messageStore)
+				this.getAllMessages()
 			})
 	  }catch(error){
 	 		this.handleError("Unable to post message")
