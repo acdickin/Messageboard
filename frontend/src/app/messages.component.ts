@@ -30,7 +30,7 @@ export class MessagesComponent implements OnInit {
   
     (name)? this.webService.getMessages(name) : this.webService.getAllMessages();
     this.webService.messages.subscribe(messages=>{
-      this.messages = messages
+      this.messages = messages.reverse()
     })
   }
 }
