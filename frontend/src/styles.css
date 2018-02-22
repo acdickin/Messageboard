@@ -13,3 +13,7 @@ body{
 	float:right;
 	font-size: 14px;
 }
+.mat-button{
+	min-width: 0px;
+	padding: 0;
+}
