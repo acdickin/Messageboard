@@ -32,6 +32,10 @@ export class NewMessagesComponent  {
     text:""
   }
   post(){
-    this.webService.postMessage(this.message)    
+    this.webService.postMessage(this.message) 
+    this.message={
+      user:this.auth.name,
+      text:""
+    }   
   }
 }

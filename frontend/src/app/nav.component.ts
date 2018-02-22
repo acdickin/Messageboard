@@ -5,13 +5,13 @@ import { AuthService } from './auth.service'
   selector: 'nav',
   template: `
   	<mat-toolbar color="primary">
-    	<button mat-button routerLink="/"> Message Board</button>
-    	<button mat-button routerLink="/message">Message</button>
+    	<button mat-button class="button" routerLink="/"> Message Board</button>
+    	<button mat-button class="button" routerLink="/message">Message</button>
     	<span style="flex: 1 1 auto"></span>
-    	<button *ngIf="!auth.isAuthenticated" mat-button routerLink="/login">Login</button>
-    	<button *ngIf="!auth.isAuthenticated" mat-button routerLink="/register">Register</button>
-    	<button *ngIf="auth.isAuthenticated" mat-button routerLink="/"> Welcome {{auth.name}} </button>
-    	<button *ngIf="auth.isAuthenticated" mat-button (click)="auth.logout()">Log out</button>
+    	<button *ngIf="!auth.isAuthenticated" mat-button class="button" routerLink="/login">Login</button>
+    	<button *ngIf="!auth.isAuthenticated" mat-button class="button" routerLink="/register">Register</button>
+    	<button *ngIf="auth.isAuthenticated" mat-button class="button" routerLink="/"> Welcome {{auth.name}} </button>
+    	<button *ngIf="auth.isAuthenticated" mat-button class="button" (click)="auth.logout()">Log out</button>
     </mat-toolbar>
   `,
 })
